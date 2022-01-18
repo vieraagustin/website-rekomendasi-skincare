@@ -1,4 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
 <!-- Content Wrapper -->
+<style>
+body {
+ background-image: url("C:/xampp/htdocs/skripsi/assets/image/background.jpg");
+}
+</style>
+
         <div id="content-wrapper" class="d-flex flex-column">
   
             <!-- Main Content -->
@@ -15,9 +23,6 @@
                         <h1 class="h6 mb-0 text-primary">HAI, SELAMAT DATANG DI WEBSAITE REKOMENDASI PRODUK SKINCARE YANG SESUAI DENGAN JENIS KULIT WAJAH ANDA</h1>
                     </div>
 
-
-
-                    
 
                      <!-- Footer -->
             <footer class="sticky-footer bg-white">

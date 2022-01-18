@@ -127,7 +127,9 @@ CREATE TABLE `produk` (
   `jenis_skincare` int(11) NOT NULL,
   `merek_produk` varchar(200) NOT NULL,
   `id_JK` int(11) NOT NULL,
-  `nama_produk` varchar(100) NOT NULL
+  `nama_produk` varchar(100) NOT NULL,
+  `harga` INT(11) NULL DEFAULT NULL,
+	`gambar` VARCHAR(255) NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

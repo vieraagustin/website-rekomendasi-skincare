@@ -54,17 +54,25 @@ class Produk extends CI_Controller
 		$hapus = $this->Produk_model->hapusdata($id_produk);
 		redirect('admin/Produk');
 	}
-	public function editdata()
+	public function editdata($id = null)
 	{
-		$id_produk = $this->uri->segment(4);
-		$data = array(
-			'List_JK' => $this->JK_model->group_JK(),
-			'List_JS' => $this->JS_model->tampildata(),
-			'data_produk' => $this->Produk_model->get_by_id($id_produk)
-		);
-		$this->load->view('admin/admin_sidebar');
-		$this->load->view('admin/produk/editproduk', $data);
-		$this->load->view('admin/admin_footer');
+		if ($id != null) {
+			$prodak_select = $this->Produk_model->get($id);
+			if ($prodak_select->num_rows() > 0) {
+				$data = array(
+					'List_JK' => $this->JK_model->tampildata(),
+					'List_JS' => $this->JS_model->tampildata(),
+					'data_produk' => $this->Produk_model->get_by_id($id)
+				);
+				$this->load->view('admin/admin_sidebar');
+				$this->load->view('admin/produk/editproduk', $data);
+				$this->load->view('admin/admin_footer');
+			} else {
+				redirect('404_override');
+			}
+		} else {
+			redirect('404_override');
+		}
 	}
 	public function proses_editdata()
 	{
@@ -77,7 +85,8 @@ class Produk extends CI_Controller
 			'jenis_skincare' => $jenis_skincare,
 			'merek_produk' => $merek_produk,
 			'id_JK' => $nama_Jk,
-			'nama_produk' => $nama_produk
+			'nama_produk' => $nama_produk,
+			'harga' =>  $this->input->post('harga_produk'),
 		);
 		$this->Produk_model->editdata($id_produk, $data);
 		redirect('admin/Produk');

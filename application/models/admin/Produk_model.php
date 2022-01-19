@@ -52,4 +52,13 @@ class Produk_model extends CI_Model
 			return $return;
 		}
 	}
+	public function get($id = null)
+	{
+		if ($id != null) {
+			$a = $this->db->get_where('produk', array('id_produk' => $id));
+		} else {
+			$a = $this->db->get('produk');
+		}
+		return $a;
+	}
 }

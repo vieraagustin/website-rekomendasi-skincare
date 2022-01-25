@@ -16,7 +16,7 @@
                     <!-- Page Heading -->
                     <div class="row ml-4">
                         <div class="d-sm-flex align-items-center justify-content-between ">
-                          <h1 class="h6 mb-10 text-gray-700 text-uppercase"> REKOMENDASI PRODUK SKINCARE <?= isset($_SESSION['nama'])?'UNTUK '.$_SESSION['nama']:''; ?> BERDASARKAN JENIS KULIT WAJAH</h1>
+                            <h1 class="h6 mb-10 text-gray-700 text-uppercase"> REKOMENDASI PRODUK SKINCARE <?= isset($_SESSION['nama']) ? 'UNTUK ' . $_SESSION['nama'] : ''; ?> BERDASARKAN JENIS KULIT WAJAH</h1>
                         </div>
                     </div>
 
@@ -34,26 +34,26 @@
 
                                     <div class="form-group">
                                         <label class="form-check-label"> <?= $i . " Apakah " . $kriteria->kriteria ?></label>
-                                        <dev class="">
-                                            <div class="form-check ml-3 mt-1 ">
+                                        <div class="">
+                                            <div class="custom-control custom-radio custom-control-inline ml-3 mt-1  ">
                                                 <input class="form-check-input" required type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria tidak muncul">
                                                 <label class="form-check-label" for="inlineRadio1">kriteria tidak muncul</label>
                                             </div>
 
-                                            <div class="form-check ml-3 ">
+                                            <div class="custom-control custom-radio custom-control-inline ml-3 ">
                                                 <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria kurang muncul">
                                                 <label class="form-check-label" for="inlineRadio1">kriteria kurang muncul</label>
                                             </div>
 
-                                            <div class="form-check ml-3 ">
+                                            <div class="custom-control custom-radio custom-control-inline ml-3 ">
                                                 <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria agak muncul">
                                                 <label class="form-check-label" for="inlineRadio1">kriteria agak muncul</label>
                                             </div>
-                                            <div class="form-check  ml-3">
+                                            <div class="custom-control custom-radio custom-control-inline  ml-3">
                                                 <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria yakin muncul">
                                                 <label class="form-check-label" for="inlineRadio1">kriteria yakin muncul</label>
                                             </div>
-
+                                        </div>
                                     </div>
 
                                     <?php $i++ ?>

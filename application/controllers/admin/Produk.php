@@ -76,18 +76,34 @@ class Produk extends CI_Controller
 	}
 	public function proses_editdata()
 	{
+		$data=array();
 		$id_produk = $this->uri->segment(4);
 		$jenis_skincare = $this->input->post('jenis_skincare');
 		$merek_produk = $this->input->post('merek_produk');
 		$nama_produk = $this->input->post('nama_produk');
 		$nama_Jk = $this->input->post('nama_Jk');
-		$data = array(
-			'jenis_skincare' => $jenis_skincare,
-			'merek_produk' => $merek_produk,
-			'id_JK' => $nama_Jk,
-			'nama_produk' => $nama_produk,
-			'harga' =>  $this->input->post('harga_produk'),
-		);
+		$gbr = $this->input->post('image');
+			$upload = $this->Produk_model->upload();
+			if ($upload['result'] == "success") {
+				$data = array(
+					'jenis_skincare' => $jenis_skincare,
+					'merek_produk' => $merek_produk,
+					'id_JK' => $nama_Jk,
+					'nama_produk' => $nama_produk,
+					'harga' =>  $this->input->post('harga_produk'),
+					'gambar' => $upload['file']['file_name'],
+				);
+			}else{
+			$data = array(
+				'jenis_skincare' => $jenis_skincare,
+				'merek_produk' => $merek_produk,
+				'id_JK' => $nama_Jk,
+				'nama_produk' => $nama_produk,
+				'harga' =>  $this->input->post('harga_produk'),
+			);
+		}
+
+
 		$this->Produk_model->editdata($id_produk, $data);
 		redirect('admin/Produk');
 	}

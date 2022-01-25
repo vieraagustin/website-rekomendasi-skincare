@@ -13,7 +13,7 @@ class Jenis_Kulit extends CI_Controller {
 			$data=array(
 					"List_Kriteria"=>$this->Kriteria_model->tampil()
 			);
-			$this->load->view('user/sidebar_user');
+		//	$this->load->view('user/sidebar_user');
 			$this->load->view('user/jeniskulit',$data);
 		}
 
@@ -34,16 +34,16 @@ class Jenis_Kulit extends CI_Controller {
 			$ket_bobot13 =$this->input->post('nilai_bobot13');
 			$ket_bobot14 =$this->input->post('nilai_bobot14');
 
-			
-	//cek bobot masing-masing kriteria 
-			//kulit normal 
+
+	//cek bobot masing-masing kriteria
+			//kulit normal
 			$bobot1 = $this->Kriteria_model->cek_bobot($ket_bobot1);
 			$bobot2 = $this->Kriteria_model->cek_bobot($ket_bobot2);
 			$bobot3 = $this->Kriteria_model->cek_bobot($ket_bobot3);
 			$bobot4 = $this->Kriteria_model->cek_bobot($ket_bobot4);
 			$bobot9 = $this->Kriteria_model->cek_bobot($ket_bobot9);
 
-			//kulit berminyak 
+			//kulit berminyak
 			$bobot5 = $this->Kriteria_model->cek_bobot($ket_bobot5);
 			$bobot6 = $this->Kriteria_model->cek_bobot($ket_bobot6);
 			$bobot7 = $this->Kriteria_model->cek_bobot($ket_bobot7);
@@ -58,8 +58,8 @@ class Jenis_Kulit extends CI_Controller {
 			$bobot13 = $this->Kriteria_model->cek_bobot($ket_bobot13);
 			$bobot14 = $this->Kriteria_model->cek_bobot($ket_bobot14);
 			$bobot5 = $this->Kriteria_model->cek_bobot($ket_bobot5);
-			
-	//bobot total 
+
+	//bobot total
 			//kulit normal
 			$BT_normal = $bobot1[0]->bobot + $bobot2[0]->bobot + $bobot3[0]->bobot + $bobot4[0]->bobot + $bobot9[0]->bobot ;
 			//kulit berminyak
@@ -88,7 +88,7 @@ class Jenis_Kulit extends CI_Controller {
 			}else{
 				$probabilitas_bobot3 = $bobot3[0]->bobot/$BT_normal;
 			}
-			
+
 			if ($bobot4[0]->bobot == 0){
 				$probabilitas_bobot4 = 0;
 			}else{
@@ -107,7 +107,7 @@ class Jenis_Kulit extends CI_Controller {
 			}else{
 				$probabilitas_bobot5 = $bobot5[0]->bobot/$BT_berminyak;
 			}
-		
+
 			if($bobot6[0]->bobot == 0){
 				$probabilitas_bobot6 = 0;
 			}else{
@@ -125,8 +125,8 @@ class Jenis_Kulit extends CI_Controller {
 			}else{
 				$probabilitas_bobot14 = $bobot14[0]->bobot/$BT_berminyak;
 			}
-			
-			//kulit Kering 
+
+			//kulit Kering
 			if($bobot8[0]->bobot == 0){
 				$probabilitas_bobot8 = 0;
 			}else{
@@ -176,7 +176,7 @@ class Jenis_Kulit extends CI_Controller {
 				$probabilitas_bobot17 = $bobot5[0]->bobot/$BT_kombinasi;
 			}
 	//nilai ambang kriteria
-			//kulit normal 
+			//kulit normal
 			$NA_bobot1 = ($bobot1[0]->bobot/2) * $probabilitas_bobot1;
 			$NA_bobot2 = ($bobot2[0]->bobot/2) * $probabilitas_bobot2;
 			$NA_bobot3 = ($bobot3[0]->bobot/2) * $probabilitas_bobot3;
@@ -187,7 +187,7 @@ class Jenis_Kulit extends CI_Controller {
 			$NA_bobot6 = ($bobot6[0]->bobot/2) * $probabilitas_bobot6;
 			$NA_bobot7 = ($bobot7[0]->bobot/2) * $probabilitas_bobot7;
 			$NA_bobot14 = ($bobot14[0]->bobot/2) * $probabilitas_bobot14;
-			//kulit kering 
+			//kulit kering
 			$NA_bobot8 = ($bobot8[0]->bobot/2) * $probabilitas_bobot8;
 			$NA_bobot15 = ($bobot9[0]->bobot/2) * $probabilitas_bobot15;
 			$NA_bobot10 = ($bobot10[0]->bobot/2) * $probabilitas_bobot10;
@@ -203,7 +203,7 @@ class Jenis_Kulit extends CI_Controller {
 			$AT_berminyak = $NA_bobot5 + $NA_bobot6 + $NA_bobot7 + $NA_bobot14;
 			$AT_kering = $NA_bobot8 + $NA_bobot15 + $NA_bobot10 + $NA_bobot11;
 			$AT_kombinasi = $NA_bobot12 + $NA_bobot13 + $NA_bobot16 + $NA_bobot17;
-			
+
 
 			$p_normal = $AT_normal * 100;
 			$p_berminyak = $AT_berminyak * 100;

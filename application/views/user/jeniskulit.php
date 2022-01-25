@@ -16,7 +16,7 @@
                     <!-- Page Heading -->
                     <div class="row ml-4">
                         <div class="d-sm-flex align-items-center justify-content-between ">
-                            <h1 class="h6 mb-10 text-gray-700">REKOMENDASI PRODUK SKINCARE BERDASARKAN JENIS KULIT WAJAH</h1>
+                          <h1 class="h6 mb-10 text-gray-700 text-uppercase"> REKOMENDASI PRODUK SKINCARE <?= isset($_SESSION['nama'])?'UNTUK '.$_SESSION['nama']:''; ?> BERDASARKAN JENIS KULIT WAJAH</h1>
                         </div>
                     </div>
 

@@ -1,8 +1,9 @@
-<?php defined('BASEPATH') OR exit('No direct script access allowed');
+<?php defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
+class Login extends CI_Controller
+{
 
-	
+
 	public function index()
 	{
 		$this->load->view('admin/admin_header');
@@ -10,19 +11,23 @@ class Login extends CI_Controller {
 		$this->load->view('admin/admin_footer');
 	}
 
-	function proses(){
+	function proses()
+	{
 		$post = $this->input->post(null, TRUE);
-		if(isset($post['login'])){
+		if (isset($post['login'])) {
 			$this->load->model('login_m');
 			$temp = $this->login_m->auth($post);
-			if($temp->num_rows() > 0){
+			if ($temp->num_rows() > 0) {
 				redirect('admin/Produk');
-			}else{
+			} else {
 				redirect('login');
-				
 			}
-		}else{
+		} else {
 			redirect('login');
 		}
+	}
+	function home()
+	{
+		redirect('user/awal');
 	}
 }

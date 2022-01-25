@@ -12,7 +12,7 @@
                     <div class="card shadow mb-4">
                         <div class="row">
                             <div class="col">
-                                <form method="POST" action="<?= site_url("admin/Produk/proses_editdata/" . $data_produk[0]->id_produk); ?>">
+                                <form method="POST" enctype="multipart/form-data" action="<?= site_url("admin/Produk/proses_editdata/" . $data_produk[0]->id_produk); ?>">
                                     <div class="form-group row mt-3 mr-2 ml-2">
                                         <label for="jenis_skincare" class="col-sm-3 col-form-label">Jenis Skincare</label>
                                         <div class="col-sm-9">

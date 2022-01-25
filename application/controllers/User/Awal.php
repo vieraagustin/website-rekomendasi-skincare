@@ -16,7 +16,7 @@ class Awal extends CI_Controller {
 			$nama=$this->input->post('nama');
 			// $this->Awal_Model->simpan_nama
 			$this->session->set_userdata('nama',$nama);
-			var_dump($this->session->userdata('nama'));
-
+		//	var_dump($this->session->userdata('nama'));
+			redirect('user/Jenis_Kulit');
 		}
 }

@@ -21,9 +21,9 @@
     <link href="<?= base_url() ?>assets/template/css/sb-admin-2.min.css" rel="stylesheet">
     <style type="text/css">
         body {
-            background: url(<?php echo base_url("assets/image/bg1.jpg"); ?>);
+            background: url(<?php echo base_url("assets/image/background.jpg"); ?>);
             background-repeat: no-repeat;
-            background-size: 100% 700px;
+           	background-size: cover;
         }
 
         .center {
@@ -43,8 +43,8 @@
         <!-- Main Content -->
         <div id="content">
             <div class="center">
-                <h1 style="text-align:center;" class="h2 mb-0 text-primary">HAI, SELAMAT DATANG DI WEBSAITE REKOMENDASI PRODUK SKINCARE YANG SESUAI DENGAN JENIS KULIT WAJAH ANDA</h1>
-                <h3 style="text-align:center;" class="h4 mt-2 ml-1 mb-3 text-primary ">silahkan masukan nama anda </h3>
+                <h1 style="text-align:center;" class=" mb-0 text-primary">HAI, SELAMAT DATANG DI WEBSAITE REKOMENDASI PRODUK SKINCARE YANG SESUAI DENGAN JENIS KULIT WAJAH ANDA</h1>
+                <h3 style="text-align:center;" class=" mt-2 ml-1 mb-3 text-primary ">silahkan masukan nama anda </h3>
                 <form method="post" action="<?= site_url('User/Awal/simpan_nama') ?>">
                     <input class="form-control" type="text" name="nama" />
                     <button type="submit" class="mt-3 btn btn-info">Simpan</button>

@@ -33,7 +33,23 @@ class Jenis_Kulit extends CI_Controller {
 			$ket_bobot12 =$this->input->post('nilai_bobot12');
 			$ket_bobot13 =$this->input->post('nilai_bobot13');
 			$ket_bobot14 =$this->input->post('nilai_bobot14');
-
+			if (!(isset($ket_bobot1)&&
+			isset($ket_bobot2)&&
+			isset($ket_bobot3)&&
+			isset($ket_bobot4)&&
+			isset($ket_bobot5)&&
+			isset($ket_bobot6)&&
+			isset($ket_bobot7)&&
+			isset($ket_bobot8)&&
+			isset($ket_bobot9)&&
+			isset($ket_bobot10)&&
+			isset($ket_bobot11)&&
+			isset($ket_bobot12)&&
+			isset($ket_bobot13)&&
+			isset($ket_bobot14))
+			){
+				redirect('user/Jenis_Kulit');
+			}
 
 	//cek bobot masing-masing kriteria
 			//kulit normal

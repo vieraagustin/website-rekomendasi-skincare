@@ -87,7 +87,7 @@
                                         </div>
 
                                         <div class="custom-control custom-radio custom-control-inline ml-3 ">
-                                            <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria agak muncul">
+                                            <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria agak muncul" checked>
                                             <label class="form-check-label" for="inlineRadio1">kriteria agak muncul</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline  ml-3">

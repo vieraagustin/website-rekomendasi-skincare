@@ -237,6 +237,8 @@ class Jenis_Kulit extends CI_Controller {
 					'list_js' => $this->JS_model->tampildata()
 				);
 
+				$data['list_produk'] = [];
+
 				$this->load->view('user/sidebar_user');
 				$this->load->view('user/hasil',$data);
 		}

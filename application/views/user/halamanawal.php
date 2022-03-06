@@ -3,8 +3,6 @@
 <!-- Content Wrapper -->
 
 <head>
-
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -44,9 +42,21 @@
         <div id="content">
             <div class="center">
                 <h1 style="text-align:center;" class=" mb-0 text-primary">HAI, SELAMAT DATANG DI WEBSAITE REKOMENDASI PRODUK SKINCARE YANG SESUAI DENGAN JENIS KULIT WAJAH ANDA</h1>
-                <h3 style="text-align:center;" class=" mt-2 ml-1 mb-3 text-primary ">silahkan masukan nama anda </h3>
+                <h3 style="text-align:center;" class=" mt-2 ml-1 mb-3 text-primary ">silahkan masukan biodata anda </h3>
                 <form method="post" action="<?= site_url('User/Awal/simpan_nama') ?>">
-                    <input class="form-control" type="text" name="nama" />
+                    <input class="form-control" type="text" name="nama" placeholder="Masukkan nama anda..." />
+                    <br>
+                    <!-- <input class="form-control" type="number" min="1" name="umur" placeholder="Masukkan umur anda..." />
+                    <br> -->
+                    <select class="form-control" name="kategori_uang">
+                        <option value="">-= Rata-Rata Keuangan Jajan Skincare =-</option>
+                        <option value="1">&le; Rp 50.000</option>
+                        <option value="2">&le; Rp 100.000</option>
+                        <option value="3">Rp 100.000 - Rp 200.000</option>
+                        <option value="4">Rp 200.001 - Rp 500.000</option>
+                        <option value="5">&gt; Rp 500.000</option>
+                    </select>
+
                     <button type="submit" class="mt-3 btn btn-info">Simpan</button>
                 </form>
             </div>

@@ -7,7 +7,9 @@ class Jenis_Kulit extends CI_Controller {
 		parent::__construct();
 		$this->load->model('User/Kriteria_model','Kriteria_model');
 		$this->load->model('admin/JS_model','JS_model');
+		$this->load->model('KBSModel', 'kbs_m');
 	}
+
 		public function index()
 		{
 			$data=array(
@@ -228,6 +230,13 @@ class Jenis_Kulit extends CI_Controller {
 				}else{
 					$list_produk=$this->Kriteria_model->produk_by_jk($id_JK);
 				}
+
+				$kategori_finansial = $this->session->userdata('sess_skincare_uang');
+
+				$this->session->set_userdata('SESS_KBS_SKINCARE_CERTAINTY', max($nilai));
+				$this->session->set_userdata('SESS_KBS_SKINCARE_JENIS_KULIT', $id_JK);
+				$this->session->set_userdata('SESS_KBS_SKINCARE_KATEGORI_FINANSIAL', $kategori_finansial);
+
 				$data = array(
 					'p_normal'=>$p_normal,
 					'p_berminyak'=>$p_berminyak,
@@ -237,9 +246,37 @@ class Jenis_Kulit extends CI_Controller {
 					'list_js' => $this->JS_model->tampildata()
 				);
 
-				$data['list_produk'] = [];
+				$this->session->set_userdata('SESS_KBS_SKINCARE_RESULT', $data);
+
+				$data['list_produk'] = $list_produk;
+
+				$data['filters'] = $this->kbs_m->get_all_filter();
 
 				$this->load->view('user/sidebar_user');
 				$this->load->view('user/hasil',$data);
+		}
+
+		public function rekomendasi() {
+			$filter_id = -1;
+
+			if($this->input->post('filter_produk')) {
+				$filter_produk = $this->input->post('filter_produk');
+
+				if(!array_key_exists('filter_semua', $filter_produk)) {
+					$filter_id = $filter_produk;
+				}
+			}
+
+			$data = $this->session->userdata('SESS_KBS_SKINCARE_RESULT');
+			$id_JK = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');
+
+			$list_produk = $this->Kriteria_model->produk_by_jk_and_filter($id_JK, $filter_id);
+
+			$data['list_produk'] = $list_produk;
+
+			$data['filters'] = $this->kbs_m->get_all_filter();
+
+			$this->load->view('user/sidebar_user');
+			$this->load->view('user/hasil',$data);
 		}
 	}

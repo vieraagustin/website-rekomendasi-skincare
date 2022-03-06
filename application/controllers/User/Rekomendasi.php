@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 
-class rekomendasi extends CI_Controller {
+class Rekomendasi extends CI_Controller {
 		public function __construct(){
 			parent::__construct();
 			$this->load->model('User/Rekomendasi_model','Rekomendasi_model');
@@ -18,16 +18,7 @@ class rekomendasi extends CI_Controller {
 			}else{
 				$data = $this->Rekomendasi_model->tampil_produk_byJK($jenis_kulit);
 			}
-			$i=1;
-			foreach ($data as $list) : ?>
-				<tr>
-					<td><?= $i ?></td>
-					<td><?= $list->jenis_skincare ?></td>
-					<td><?= $list->merek_produk ?></td>
-					<td><?= $list->nama_produk ?></td>
-				</tr>
-			<?php $i++ ?>
-			<?php endforeach ?>
-			<?php
+			
+			var_dump($data); die;
 		}
 	}

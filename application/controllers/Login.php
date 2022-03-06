@@ -26,8 +26,9 @@ class Login extends CI_Controller
 			redirect('login');
 		}
 	}
+
 	function home()
 	{
-		redirect('user/awal');
+		redirect('User/Awal');
 	}
 }

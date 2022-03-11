@@ -23,6 +23,7 @@ class Awal extends CI_Controller {
 			$this->session->set_userdata('sess_skincare_nama',$nama);
 			$this->session->set_userdata('sess_skincare_umur',$umur);
 			$this->session->set_userdata('sess_skincare_uang',$kategori_uang);
+			$this->session->set_userdata('SESS_KBS_SKINCARE_KATEGORI_FINANSIAL',$kategori_uang);
 		//	var_dump($this->session->userdata('nama'));
 			redirect('User/Jenis_Kulit');
 		}

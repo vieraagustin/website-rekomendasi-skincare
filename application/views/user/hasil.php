@@ -3,6 +3,14 @@
         background: salmon;
         color: white;
     }
+
+    .checked {
+        color: orange;
+    }
+
+    .rating {
+        cursor: pointer;
+    }
 </style>
 
 <!-- Sidebar Toggler (Sidebar) -->
@@ -34,7 +42,7 @@
         <div class="card-body">
             <div class="table-responsive float-right">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <h1 class="text-uppercase">   <?= $this->session->userdata('sess_skincare_nama') ?'Hii '.$this->session->userdata('sess_skincare_nama'):''; ?> </h1>
+                    <h1 class="text-uppercase">   <?= $this->session->userdata('sess_skincare_nama') ?'Hi.. '.$this->session->userdata('sess_skincare_nama'):''; ?> 🩲 </h1>
                     <h1 class="h6 ml-1 mb-3 text-gray-800">hasil skor jenis kulit anda sebagai berikut :</h1>
                     <thead>
                         <tr class="bg-info text-white">
@@ -46,10 +54,10 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><?= number_format($p_normal,2) ?>%</td>
-                            <td><?= number_format($p_berminyak,2) ?>%</td>
-                            <td><?= number_format($p_kering,2) ?>%</td>
-                            <td><?= number_format($p_kombinasi,2) ?>%</td>
+                            <td><?= number_format($p_normal, 2) ?>%</td>
+                            <td><?= number_format($p_berminyak, 2) ?>%</td>
+                            <td><?= number_format($p_kering, 2) ?>%</td>
+                            <td><?= number_format($p_kombinasi, 2) ?>%</td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,8 +65,13 @@
         </div>
         <h1 class="h6 ml-5 mb-3 text-danger font-italic">*catatan : untuk hasil yang lebih jelas, anda bisa melakukan konsultasi langsung dengan ahli kulit </h1>
         <div class="container">
-            <div class="row">
-                <div class="col-12 my-4">
+            <div class="row my-4">
+                <div class="col-6">
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#recommendationModal" onclick="showPofileMatchRecommendation()">
+                        <i class="fas fa-fw fa-poop"></i> | Rekomendasi
+                    </button>
+                </div>
+                <div class="col-6">
                     <button id="submit-button" onclick="submitMyData(this)" class="btn btn-success float-right border-radius" disabled>
                         SUBMIT REKOMENDASI
                     </button>
@@ -133,6 +146,79 @@
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="recommendationModal" tabindex="-1" aria-labelledby="recommendationModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="min-width: 80% !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="recommendationModalLabel">Rekomendasi Lain</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-hovered">
+            <thead>
+                <th>#</th>
+                <th>Nama Produk</th>
+                <th>Harga</th>
+                <th>Merk</th>
+                <th>Jenis Produk</th>
+            </thead>
+            <tbody id="list-recommendation">
+                <tr>
+                    <td colspan="4" class="text-center">Sedang proses...</td>
+                </tr>
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style="max-width: 70% !important">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="feedbackModalLabel">Rating Feedback</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <section>
+            <p>1. Saya merasa sistem ini membantu saya dalam memilih skincare</p>
+            <div>
+                <span class="fa fa-star rate-1 rating checked" onclick="giveRate(this, 1, 1)"></span>
+                <span class="fa fa-star rate-1 rating checked"></span>
+                <span class="fa fa-star rate-1 rating checked"></span>
+                <span class="fa fa-star rate-1 rating"></span>
+                <span class="fa fa-star rate-1 rating"></span>
+            </div>
+        </section>
+        <p>2. Saya merasa hasil jenis kulit tidak sesuai</p>
+        <p>3. Saya merasa sistem ini mudah digunakan</p>
+        <p>4. Saya merasa bingung menggunakan sistem ini</p>
+        <p>5. Saya berfikir sistem ini akan saya gunakan lagi</p>
+        <p>6. Saya merasa hasil rekomendasi tidak sesuai</p>
+        <p>7. Saya merasa nyaman dalam menggunakan sistem ini</p>
+        <p>8. Saya merasa sistem ini rumit digunakan</p>
+        <p>9. Saya merasa hasil rekomendasi yang diberikan sesuai</p>
+        <p>10. Saya merasa ada banyak hal yang tidak sesuai pada sistem ini</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hasSubmitFeedback()">Kirimkan Feedback</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Footer -->
 <footer class="sticky-footer bg-white">
 <div class="container my-auto">
@@ -160,6 +246,7 @@
 
 <script type="text/javascript">
     let wasRate = false;
+    let pause = false;
 
     let selectedProduct = [];
 
@@ -169,6 +256,48 @@
 
     const saveMyRecommendation = async (allID) => {
         return await axios.get(`<?= base_url('User/KBSController/save_my_recommendation/') ?>${allID}`).then(res => res.data);
+    }
+
+    const getProfileMatchingRecommendation = async () => {
+        return await axios.get(`<?= base_url('User/KBSController/profile_matching') ?>`).then(res => res.data);
+    }
+
+    const showPofileMatchRecommendation = async () => {
+        console.info('Algoritma dijalankan...');
+        const result = await getProfileMatchingRecommendation().then(res => res);
+
+        let temp = ``;
+
+        // <th>Nama Produk</th>
+        //         <th>Harga</th>
+        //         <th>Merk</th>
+        //         <th>Jenis Produk</th>
+
+        if(result.profile_matching != null) {
+            console.table(result.profile_matching);
+
+            result.products.forEach((res, index) => {
+                temp += `<tr>
+                            <td>${index + 1}</td>
+                            <td>${res.nama_produk}</td>
+                            <td>${res.harga}</td>
+                            <td>${res.merek_produk}</td>
+                            <td>${res.jenis_skincare}</td>
+                        </tr>`;
+            });
+        } else {
+            result.products.forEach((res, index) => {
+                temp += `<tr>
+                            <td>${index + 1}</td>
+                            <td>${res.nama_produk}</td>
+                            <td>${res.harga}</td>
+                            <td>${res.merek_produk}</td>
+                            <td>${res.jenis_skincare}</td>
+                        </tr>`;
+            });
+        }
+
+        document.getElementById('list-recommendation').innerHTML = temp;
     }
 
     const favIt = async (target) => {
@@ -245,13 +374,32 @@
         }
     }
 
+    const hasSubmitFeedback = () => {
+        wasRate = true;
+    }
+
     const showRateModal = () => {
-        alert('berhasil nich');
+        pause = true;
+
+        setTimeout(() => {
+            pause = false;
+        }, 30000);
+
+        $("#feedbackModal").modal();
     }
 
     window.addEventListener('load', () => {
-        
-        setTimeout(showRateModal, 5000);
+
+        setInterval(() => {
+            if(!pause) {
+                // if(wasRate) {
+                //     clearInterval();
+                // } else {
+                //     showRateModal();
+                // }
+                (wasRate) ? clearInterval() : showRateModal();
+            }
+        }, 31000);
 
     });
 </script>

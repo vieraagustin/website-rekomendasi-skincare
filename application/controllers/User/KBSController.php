@@ -7,6 +7,19 @@ class KBSController extends CI_Controller {
 		$this->load->model('KBSModel', 'kbs_m');
 	}
 
+	private function sort_data($data) {
+
+    $skor = array();
+    foreach ($data as $dt)
+    {
+        $skor[$dt['id']] = $dt['NT'];
+    }
+
+    array_multisort($skor, SORT_DESC, $data);
+
+    return $data;
+  }
+
 	public function profile_matching() {
 		$result = [];
 
@@ -23,126 +36,115 @@ class KBSController extends CI_Controller {
       -4 => (float) 1
     ];
 
+    $normalize_jenis_kulit = [
+    	1 => 1,
+    	9 => 2,
+    	13 => 3,
+    	19 => 4
+    ];
+
+    $kategori_finansial = $this->session->userdata('SESS_KBS_SKINCARE_KATEGORI_FINANSIAL');
+		$jenis_kulit = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');
+		$certainty_jenis_kulit = $this->session->userdata('SESS_KBS_SKINCARE_CERTAINTY');
+
+    $target = [
+    	'kategori_finansial' => ((int) $kategori_finansial) - 1,
+    	'jenis_kulit' => $normalize_jenis_kulit[$jenis_kulit],
+    	'certainty' => (int) (((float) $certainty_jenis_kulit / 100) * (4 + 0) - 0)
+    ];
+
     // get all alternative
-    $alternative = $this->kbs_m->get_all_alternative();
+    $alternative = $this->kbs_m->get_all_alternative($jenis_kulit);
 
     if(count($alternative) < 5) {
-    	return $result;
+    	$result['profile_matching'] = NULL;
+    	$result['products'] = $this->kbs_m->get_products_by_skin($jenis_kulit, 'ASC');
+    	
+    	echo json_encode($result, JSON_PRETTY_PRINT);
+    	return;
     }
+
+    $normalize_alternative = [];
 
     foreach($alternative as $al) {
-    	var_dump($al);
-    	echo "<br><br>";
+    	$temp = [
+    		'id' => $al['id'],
+    		'kategori_finansial' => ((int) $al['kategori_finansial']) - 1,
+    		'jenis_kulit' => $normalize_jenis_kulit[$al['jenis_kulit']],
+    		'certainty' => (int) (((float)$al['certainty'] / 100) * (4 + 0) - 0)
+    	];
+
+    	// $normalize_alternative[$al['id']] = $temp;
+    	array_push($normalize_alternative, $temp);
     }
-
-    die;
-
-
-    // value * (maksimum - minimum) + minimum
-    $new_value = (int) ($value * (4 + 4) - 4);
-
-    die;
-
-    $alternatif = $this->m_kbs->get_all_alternatif();
 
     $GAP = [];
+    foreach($normalize_alternative as $na) {
+    	$temp = [
+    		'id' => $na['id'],
+    		'kategori_finansial' => $na['kategori_finansial'] - $target['kategori_finansial'],
+    		'jenis_kulit' => $na['jenis_kulit'] - $target['jenis_kulit'],
+    		'certainty' => $na['jenis_kulit'] - $target['certainty']
+    	];
 
-    foreach($alternatif as $alternatif) {
-        $temp_poin = [];
-        foreach($alternatif['poin'] as $id => $poin) {
-          # nilai masukan - nilai ketetapan awal
-          $temp_poin[$id] = (int)$poin - (int)$target[$id]['poin'];
-        }
-
-        $temp_GAP = [
-          'kbs_id' => $alternatif['kbs_id'],
-          'user_id' => $alternatif['user_id'],
-          'poin' => $temp_poin
-        ];
-
-        array_push($GAP, $temp_GAP);
+    	array_push($GAP, $temp);
     }
-    
-    # konversi nilai GAP
+
     $konversi = [];
+
     foreach($GAP as $gap) {
-      $temp_poin = [];
-      foreach($gap['poin'] as $id => $poin) {
-        $temp_poin[$id] = $GAP_mapping[$poin];
-      }
+    	$temp = [
+    		'id' => $gap['id'],
+    		'kategori_finansial' => $GAP_mapping[$gap['kategori_finansial']],
+    		'jenis_kulit' => $GAP_mapping[$gap['jenis_kulit']],
+    		'certainty' => $GAP_mapping[$gap['certainty']]
+    	];
 
-      $temp = [
-        'kbs_id' => $gap['kbs_id'],
-        'user_id' => $gap['user_id'],
-        'poin' => $temp_poin
-      ];
-
-      array_push($konversi, $temp);
+    	array_push($konversi, $temp);
     }
 
-    # faktor NCF dan NSF
-    $faktor_score = [];
-    $persen_faktor = []; # untuk menghitung NT
+    // static factor
+    // core : kategori finansial, jenis kulit
+    // secondary : certainty
+
+    $faktor = [];
 
     foreach($konversi as $konv) {
+    	$core_faktor = (float) ($konv['kategori_finansial'] + $konv['jenis_kulit']) / 2.0;
+    	$secondary_faktor = $konv['certainty'];
 
-      $faktor = [];
-      $n_faktor = [];
-      foreach($konv['poin'] as $id => $poin) {
-        $faktor_id = (int) $target[$id]['faktor'];
+    	$temp = [
+    		'id' => $konv['id'],
+    		'NCF' => $core_faktor,
+    		'NSF' => $secondary_faktor
+    	];
 
-        if(!array_key_exists($faktor_id, $faktor)) {
-          $faktor[$faktor_id] = $poin;
-          $n_faktor[$faktor_id] = 1;
-        } else {
-          $faktor[$faktor_id] += $poin;
-          $n_faktor[$faktor_id] += 1;
-        }
-      }
-
-      $t_faktor = [];
-      foreach($faktor as $k => $v) {
-        $t_faktor[$k] = $v / $n_faktor[$k];
-      }
-
-      $final_faktor = [];
-
-      foreach($t_faktor as $k => $v) {
-        $nama_faktor = $this->m_bencana->get_faktor_name($k);
-
-        $final_faktor[$nama_faktor['nama']] = $v;
-        $persen_faktor[$nama_faktor['nama']] = (float) ((float) $n_faktor[$k] / array_sum($n_faktor));
-      }
-
-      $temp = [
-        'kbs_id' => $konv['kbs_id'],
-        'user_id' => $konv['user_id'],
-        'faktor' => $final_faktor
-      ];
-
-      array_push($faktor_score, $temp);
+    	array_push($faktor, $temp);
     }
 
-    $nilai_total = [];
-    foreach($faktor_score as $fs) {
-      $total = 0.0;
-      foreach($fs['faktor'] as $k => $v) {
-        $total += $persen_faktor[$k] * $v;
-      }
+    // result masuk sini
+    $final_NT = [];
+    foreach($faktor as $f) {
+    	$temp = [
+   			'id' => $f['id'],
+   			'NT' =>(float)( 0.66 * $f['NCF']) + ((0.34) * $f['NSF'])
+   		];
 
-      $temp = [
-        'kbs_id' => $fs['kbs_id'],
-        'user_id' => $fs['user_id'],
-        'nama_kbs' => $this->m_kbs->get_name($fs['kbs_id']),
-        'skor' => $total
-      ];
-
-      array_push($nilai_total, $temp);
+   		array_push($final_NT, $temp);
     }
 
-    $sort_data = $this->sort_data($nilai_total);
+    $final_data = $this->sort_data($final_NT);
 
-    return $result;
+    $result['profile_matching'] = $final_data;
+
+    $products = $this->kbs_m->get_recommendation_product($final_data[0]['id']);
+
+    $result['products'] = $products;
+   
+    // value * (maksimum - minimum) + minimum
+    // $new_value = (int) ($value * (4 + 0) - 0);
+
+    echo json_encode($result, JSON_PRETTY_PRINT);
 	}
 
 	public function KBSAlgorithm() {

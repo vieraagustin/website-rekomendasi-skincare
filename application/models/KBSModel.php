@@ -22,10 +22,62 @@ class KBSModel extends CI_Model {
 		return $query->result_array();
 	}
 
-	public function get_all_alternative() {
-		$query = "SELECT rekomendasi.id, rekomendasi.kategori_finansial, rekomendasi.jenis_kulit, rekomendasi.certainty FROM rekomendasi";
+	public function get_all_alternative($jenis_kulit = NULL) {
+		$query = "";
+		if(!$jenis_kulit) {
+			$query = "SELECT rekomendasi.id, rekomendasi.kategori_finansial, rekomendasi.jenis_kulit, rekomendasi.certainty FROM rekomendasi";
+		} else {
+			$query = "SELECT rekomendasi.id, rekomendasi.kategori_finansial, rekomendasi.jenis_kulit, rekomendasi.certainty FROM rekomendasi WHERE rekomendasi.jenis_kulit = $jenis_kulit";
+		}
 
 		return $this->db->query($query)->result_array();
+	}
+
+	public function get_recommendation_product($id_rekomendasi) {
+		$rekomendasi_produk = $this->db->get_where('rekomendasi_produk', ['id_rekomendasi' => $id_rekomendasi])->result_array();
+
+		$id_JK = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');
+
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+			->from('jenis_skincare')
+			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
+			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK')
+			->where('produk.id_JK', $id_JK)
+			->order_by('produk.rekomendasi', 'DESC');
+
+		$query = $this->db->get();
+		$temp_produk = $query->result_array();
+
+		$data_produk = [];
+
+		foreach($rekomendasi_produk as $rekomen) {
+			foreach($temp_produk as $tp) {
+				if($rekomen['id_produk'] == $tp['id_produk']) {
+					array_push($data_produk, $tp);
+					break;
+				}
+			}
+		}
+
+		foreach($temp_produk as $produk) {
+			if(count($data_produk) > 0) {
+				$exist = false;
+				foreach($data_produk as $dt) {
+					if($dt['id_produk'] == $produk['id_produk']) {
+						$exist = true;
+						break;
+					}
+				}
+
+				if(!$exist) {
+					array_push($data_produk, $produk);
+				}
+			} else {
+				array_push($data_produk, $produk);
+			}
+		}
+
+		return $data_produk;
 	}
 
 	public function save_recommendation($data) {

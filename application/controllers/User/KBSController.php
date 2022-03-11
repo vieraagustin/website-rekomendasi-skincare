@@ -55,6 +55,7 @@ class KBSController extends CI_Controller {
 
     // get all alternative
     $alternative = $this->kbs_m->get_all_alternative($jenis_kulit);
+    // $alternative = $this->kbs_m->get_all_alternative();
 
     if(count($alternative) < 5) {
     	$result['profile_matching'] = NULL;
@@ -126,7 +127,7 @@ class KBSController extends CI_Controller {
     $final_NT = [];
     foreach($faktor as $f) {
     	$temp = [
-   			'id' => $f['id'],
+   			'id' => (int) $f['id'],
    			'NT' =>(float)( 0.66 * $f['NCF']) + ((0.34) * $f['NSF'])
    		];
 
@@ -260,6 +261,11 @@ class KBSController extends CI_Controller {
 		}
 
 		echo json_encode(['status' => 'berhasil'], JSON_PRETTY_PRINT);
+	}
+
+	public function submit_() {
+		header('Content-Type: application/json');
+    $data = $this->security->xss_clean($this->input->raw_input_stream);
 	}
 
 }

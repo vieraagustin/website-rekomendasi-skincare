@@ -7,7 +7,7 @@ class KBSModel extends CI_Model {
 
 	public function get_products_by_skin($skin_id, $sort = NULL) {
 		
-		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga, produk.rekomendasi')
 			->from('jenis_skincare')
 			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
 			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK')
@@ -38,7 +38,7 @@ class KBSModel extends CI_Model {
 
 		$id_JK = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');
 
-		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga, produk.rekomendasi')
 			->from('jenis_skincare')
 			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
 			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK')
@@ -133,5 +133,13 @@ class KBSModel extends CI_Model {
 
 	public function get_all_filter() {
 		return $this->db->get('jenis_skincare')->result_array();
+	}
+
+	public function get_sus_question() {
+		return $this->db->get('sus_pertanyaan')->result_array();
+	}
+
+	public function submit_sus_answer($data) {
+		return '';
 	}
 }

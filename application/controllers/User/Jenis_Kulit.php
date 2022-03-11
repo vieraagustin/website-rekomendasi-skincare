@@ -252,6 +252,8 @@ class Jenis_Kulit extends CI_Controller {
 
 				$data['filters'] = $this->kbs_m->get_all_filter();
 
+				$data['question'] = $this->kbs_m->get_sus_question();
+
 				$this->load->view('user/sidebar_user');
 				$this->load->view('user/hasil',$data);
 		}
@@ -275,6 +277,8 @@ class Jenis_Kulit extends CI_Controller {
 			$data['list_produk'] = $list_produk;
 
 			$data['filters'] = $this->kbs_m->get_all_filter();
+
+			$data['question'] = $this->kbs_m->get_sus_question();	
 
 			$this->load->view('user/sidebar_user');
 			$this->load->view('user/hasil',$data);

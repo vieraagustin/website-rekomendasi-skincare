@@ -15,7 +15,7 @@ class Kriteria_model extends CI_Model
 	}
 
 	public function produk_by_jk($id_JK){
-		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga, produk.rekomendasi')
 			->from('jenis_skincare')
 			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
 			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK')
@@ -27,7 +27,7 @@ class Kriteria_model extends CI_Model
 	}
 
 	public function produk_by_jk_and_filter($id_JK, $id_filter = []) {
-		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga, produk.rekomendasi')
 			->from('jenis_skincare')
 			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
 			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK')
@@ -50,7 +50,7 @@ class Kriteria_model extends CI_Model
 	}
 
 	public function all_produk(){
-		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga')
+		$this->db->select('produk.id_produk, jenis_skincare.jenis_skincare as jenis_skincare, produk.merek_produk as merek_produk, produk.nama_produk as nama_produk, produk.harga, produk.rekomendasi')
 			->from('jenis_skincare')
 			->join('produk','jenis_skincare.id_js = produk.jenis_skincare')
 			->join('jenis_kulit','produk.id_JK = jenis_kulit.id_JK');

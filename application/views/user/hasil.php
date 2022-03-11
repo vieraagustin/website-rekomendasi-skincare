@@ -90,7 +90,16 @@
                                             <?= $list->jenis_skincare ?>
                                         </span>
                                     </div>
-                                    <div class="col-6"></div>
+                                    <div class="col-6">
+                                        <div class="float-right">
+                                            <small class="text-right">
+                                                <i class="fas fa-fw fa-heart text-danger"></i>
+                                                <span class="text-danger">
+                                                    <?= $list->rekomendasi ?>
+                                                </span>
+                                            </small>
+                                        </div>
+                                    </div>
                                 </div>
                                 <span class="text-muted">
                                     Rp <?= number_format($list->harga, 0, '', '.') ?>
@@ -191,25 +200,23 @@
         </button>
       </div>
       <div class="modal-body text-center">
-        <section>
-            <p>1. Saya merasa sistem ini membantu saya dalam memilih skincare</p>
-            <div>
-                <span class="fa fa-star rate-1 rating checked" onclick="giveRate(this, 1, 1)"></span>
-                <span class="fa fa-star rate-1 rating checked"></span>
-                <span class="fa fa-star rate-1 rating checked"></span>
-                <span class="fa fa-star rate-1 rating"></span>
-                <span class="fa fa-star rate-1 rating"></span>
-            </div>
-        </section>
-        <p>2. Saya merasa hasil jenis kulit tidak sesuai</p>
-        <p>3. Saya merasa sistem ini mudah digunakan</p>
-        <p>4. Saya merasa bingung menggunakan sistem ini</p>
-        <p>5. Saya berfikir sistem ini akan saya gunakan lagi</p>
-        <p>6. Saya merasa hasil rekomendasi tidak sesuai</p>
-        <p>7. Saya merasa nyaman dalam menggunakan sistem ini</p>
-        <p>8. Saya merasa sistem ini rumit digunakan</p>
-        <p>9. Saya merasa hasil rekomendasi yang diberikan sesuai</p>
-        <p>10. Saya merasa ada banyak hal yang tidak sesuai pada sistem ini</p>
+        <?php $number = 1; ?>
+        <?php foreach($question as $quest): ?>
+            <section>
+                <p><?= $number ?>. <?= $quest['soal'] ?></p>
+                <div>
+                    <?php for($i = 1; $i <= 5; $i++): ?>
+                        <span class="fa fa-star rate-<?= $quest['id'] ?> rating" onclick="giveRate(this, <?= $quest['id'] ?>, <?= $i ?>)"></span>
+                    <?php endfor; ?>
+                    <!-- <span class="fa fa-star rate-1 rating checked"></span>
+                    <span class="fa fa-star rate-1 rating checked"></span>
+                    <span class="fa fa-star rate-1 rating"></span>
+                    <span class="fa fa-star rate-1 rating"></span> -->
+                </div>
+                <br>
+                <?php $number++ ?>
+            </section>
+        <?php endforeach; ?>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
@@ -247,6 +254,8 @@
 <script type="text/javascript">
     let wasRate = false;
     let pause = false;
+
+    let answer = {};
 
     let selectedProduct = [];
 
@@ -298,6 +307,24 @@
         }
 
         document.getElementById('list-recommendation').innerHTML = temp;
+    }
+
+    const giveRate = (target, questId, starId) => {
+        console.info(questId, starId);
+        const stars = document.querySelectorAll(`.rate-${questId}`);
+
+        stars.forEach((res, index) => {
+            // console.log(res);
+            if((index + 1) <= starId) {
+                res.classList.add('checked');
+            } else {
+                res.classList.remove('checked');
+            }
+        });
+
+        answer[`soal_${questId}`] = starId;
+
+        console.info(answer);
     }
 
     const favIt = async (target) => {
@@ -378,7 +405,7 @@
         wasRate = true;
     }
 
-    const showRateModal = () => {
+    const showRateModal = async () => {
         pause = true;
 
         setTimeout(() => {

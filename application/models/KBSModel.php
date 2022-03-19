@@ -140,6 +140,6 @@ class KBSModel extends CI_Model {
 	}
 
 	public function submit_sus_answer($data) {
-		return '';
+		return $this->db->inset('sus_feedback', $data);
 	}
 }

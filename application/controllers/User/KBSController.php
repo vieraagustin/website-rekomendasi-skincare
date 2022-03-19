@@ -111,8 +111,8 @@ class KBSController extends CI_Controller {
     $faktor = [];
 
     foreach($konversi as $konv) {
-    	$core_faktor = (float) ($konv['kategori_finansial'] + $konv['jenis_kulit']) / 2.0;
-    	$secondary_faktor = $konv['certainty'];
+    	$core_faktor = (float) ($konv['kategori_finansial'] + $konv['certainty']) / 2.0;
+    	$secondary_faktor = $konv['jenis_kulit'];
 
     	$temp = [
     		'id' => $konv['id'],
@@ -263,9 +263,26 @@ class KBSController extends CI_Controller {
 		echo json_encode(['status' => 'berhasil'], JSON_PRETTY_PRINT);
 	}
 
-	public function submit_() {
-		header('Content-Type: application/json');
-    $data = $this->security->xss_clean($this->input->raw_input_stream);
+	public function submit_feedback() {
+		$data = $this->input->post();
+
+		$feedback_id = random_string('alnum');
+
+		foreach($data as $k => $v) {
+			$kunci = explode('_', $k);
+			$temp = [
+				'id' => NULL,
+				'feedback_id' => $feedback_id,
+				'id_soal' => $kunci[1],
+				'jawaban' => $v
+			];
+
+			if(!$this->kbs_m->submit_sus_answer($temp)) {
+				var_dump("ada kesalahan!"); die;
+			}
+		}
+
+		redirect('user/jenis_kulit/rekomendasi/true');
 	}
 
 }

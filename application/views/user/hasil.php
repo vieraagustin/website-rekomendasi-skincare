@@ -199,29 +199,32 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body text-center">
-        <?php $number = 1; ?>
-        <?php foreach($question as $quest): ?>
-            <section>
-                <p><?= $number ?>. <?= $quest['soal'] ?></p>
-                <div>
-                    <?php for($i = 1; $i <= 5; $i++): ?>
-                        <span class="fa fa-star rate-<?= $quest['id'] ?> rating" onclick="giveRate(this, <?= $quest['id'] ?>, <?= $i ?>)"></span>
-                    <?php endfor; ?>
-                    <!-- <span class="fa fa-star rate-1 rating checked"></span>
-                    <span class="fa fa-star rate-1 rating checked"></span>
-                    <span class="fa fa-star rate-1 rating"></span>
-                    <span class="fa fa-star rate-1 rating"></span> -->
-                </div>
-                <br>
-                <?php $number++ ?>
-            </section>
-        <?php endforeach; ?>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hasSubmitFeedback()">Kirimkan Feedback</button>
-      </div>
+      <form action="<?= base_url('User/KBSController/submit_feedback') ?>" method="post">
+          <div class="modal-body text-center">
+            <?php $number = 1; ?>
+            <?php foreach($question as $quest): ?>
+                <section>
+                    <p><?= $number ?>. <?= $quest['soal'] ?></p>
+                    <div>
+                        <input type="hidden" name="soal_<?= $number ?>" id="soal-<?= $number ?>">
+                        <?php for($i = 1; $i <= 5; $i++): ?>
+                            <span class="fa fa-star rate-<?= $quest['id'] ?> rating" onclick="giveRate(this, <?= $quest['id'] ?>, <?= $i ?>)"></span>
+                        <?php endfor; ?>
+                        <!-- <span class="fa fa-star rate-1 rating checked"></span>
+                        <span class="fa fa-star rate-1 rating checked"></span>
+                        <span class="fa fa-star rate-1 rating"></span>
+                        <span class="fa fa-star rate-1 rating"></span> -->
+                    </div>
+                    <br>
+                    <?php $number++ ?>
+                </section>
+            <?php endforeach; ?>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hasSubmitFeedback()">Kirimkan Feedback</button>
+          </div>
+      </form>
     </div>
   </div>
 </div>
@@ -417,16 +420,18 @@
 
     window.addEventListener('load', () => {
 
-        setInterval(() => {
-            if(!pause) {
-                // if(wasRate) {
-                //     clearInterval();
-                // } else {
-                //     showRateModal();
-                // }
-                (wasRate) ? clearInterval() : showRateModal();
-            }
-        }, 31000);
+        if(false == false) {
+            setInterval(() => {
+                if(!pause) {
+                    // if(wasRate) {
+                    //     clearInterval();
+                    // } else {
+                    //     showRateModal();
+                    // }
+                    (wasRate) ? clearInterval() : showRateModal();
+                }
+            }, 31000);
+        }
 
     });
 </script>

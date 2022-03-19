@@ -248,6 +248,8 @@ class Jenis_Kulit extends CI_Controller {
 
 				$this->session->set_userdata('SESS_KBS_SKINCARE_RESULT', $data);
 
+				$data['has_submit'] = false;
+
 				$data['list_produk'] = $list_produk;
 
 				$data['filters'] = $this->kbs_m->get_all_filter();
@@ -258,7 +260,7 @@ class Jenis_Kulit extends CI_Controller {
 				$this->load->view('user/hasil',$data);
 		}
 
-		public function rekomendasi() {
+		public function rekomendasi($has_submit = false) {
 			$filter_id = -1;
 
 			if($this->input->post('filter_produk')) {
@@ -268,6 +270,8 @@ class Jenis_Kulit extends CI_Controller {
 					$filter_id = $filter_produk;
 				}
 			}
+
+			$data['has_submit'] = $has_submit;
 
 			$data = $this->session->userdata('SESS_KBS_SKINCARE_RESULT');
 			$id_JK = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');

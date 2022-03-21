@@ -264,9 +264,11 @@ class KBSController extends CI_Controller {
 	}
 
 	public function submit_feedback() {
+		$this->load->helper('string');
+
 		$data = $this->input->post();
 
-		$feedback_id = random_string('alnum');
+		$feedback_id = random_string('alnum', 15);
 
 		foreach($data as $k => $v) {
 			$kunci = explode('_', $k);
@@ -282,7 +284,7 @@ class KBSController extends CI_Controller {
 			}
 		}
 
-		redirect('user/jenis_kulit/rekomendasi/true');
+		redirect('User/Jenis_Kulit/rekomendasi/true');
 	}
 
 }

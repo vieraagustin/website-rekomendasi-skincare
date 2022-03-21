@@ -20,7 +20,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?=base_url()?>assets/template/css/sb-admin-2.min.css" rel="stylesheet">
-    
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
 
 </head>
 

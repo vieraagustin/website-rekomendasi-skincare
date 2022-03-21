@@ -248,13 +248,13 @@ class Jenis_Kulit extends CI_Controller {
 
 				$this->session->set_userdata('SESS_KBS_SKINCARE_RESULT', $data);
 
-				$data['has_submit'] = false;
-
 				$data['list_produk'] = $list_produk;
 
 				$data['filters'] = $this->kbs_m->get_all_filter();
 
 				$data['question'] = $this->kbs_m->get_sus_question();
+
+				$data['has_submit'] = false;
 
 				$this->load->view('user/sidebar_user');
 				$this->load->view('user/hasil',$data);
@@ -271,8 +271,6 @@ class Jenis_Kulit extends CI_Controller {
 				}
 			}
 
-			$data['has_submit'] = $has_submit;
-
 			$data = $this->session->userdata('SESS_KBS_SKINCARE_RESULT');
 			$id_JK = $this->session->userdata('SESS_KBS_SKINCARE_JENIS_KULIT');
 
@@ -282,9 +280,11 @@ class Jenis_Kulit extends CI_Controller {
 
 			$data['filters'] = $this->kbs_m->get_all_filter();
 
-			$data['question'] = $this->kbs_m->get_sus_question();	
+			$data['question'] = $this->kbs_m->get_sus_question();
+
+			$data['has_submit'] = $has_submit || false;
 
 			$this->load->view('user/sidebar_user');
-			$this->load->view('user/hasil',$data);
+			$this->load->view('user/hasil', $data);
 		}
 	}

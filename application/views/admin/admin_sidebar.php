@@ -108,6 +108,12 @@
                     </div>
                 </div> -->
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="<?= base_url('admin/SUS') ?>">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Pengujian SUS</span>
+                </a>
+            </li>
         </ul>
           
         <!-- End of Sidebar -->

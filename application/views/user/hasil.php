@@ -208,7 +208,7 @@
                     <div>
                         <input type="hidden" name="soal_<?= $number ?>" id="soal-<?= $number ?>">
                         <?php for($i = 1; $i <= 5; $i++): ?>
-                            <span class="fa fa-star rate-<?= $quest['id'] ?> rating" onclick="giveRate(this, <?= $quest['id'] ?>, <?= $i ?>)"></span>
+                            <span class="fa fa-star rate-<?= $quest['id'] ?> rating" onclick="giveRate(this, <?= $quest['id'] ?>, <?= $i ?>, <?= $number ?>)"></span>
                         <?php endfor; ?>
                         <!-- <span class="fa fa-star rate-1 rating checked"></span>
                         <span class="fa fa-star rate-1 rating checked"></span>
@@ -222,7 +222,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Belum</button>
-            <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="hasSubmitFeedback()">Kirimkan Feedback</button>
+            <button type="submit" class="btn btn-primary" onclick="hasSubmitFeedback()">Kirimkan Feedback</button>
           </div>
       </form>
     </div>
@@ -312,7 +312,7 @@
         document.getElementById('list-recommendation').innerHTML = temp;
     }
 
-    const giveRate = (target, questId, starId) => {
+    const giveRate = (target, questId, starId, number) => {
         console.info(questId, starId);
         const stars = document.querySelectorAll(`.rate-${questId}`);
 
@@ -326,6 +326,8 @@
         });
 
         answer[`soal_${questId}`] = starId;
+
+        document.getElementById(`soal-${number}`).value = starId;
 
         console.info(answer);
     }
@@ -418,9 +420,9 @@
         $("#feedbackModal").modal();
     }
 
-    window.addEventListener('load', () => {
-
-        if(false == false) {
+    document.addEventListener('DOMContentLoaded', () => {
+        if('<?= $has_submit ?>' == 'false' || '<?= $has_submit ?>' == "") {
+            console.info("Jalan harusnya");
             setInterval(() => {
                 if(!pause) {
                     // if(wasRate) {

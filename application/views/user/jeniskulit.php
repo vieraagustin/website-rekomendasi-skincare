@@ -77,21 +77,21 @@
                                     <label class="form-check-label"> <?= $i . " Apakah " . $kriteria->kriteria ?></label>
                                     <div class="">
                                         <div class="custom-control custom-radio custom-control-inline ml-3 mt-1  ">
-                                            <input class="form-check-input" required type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria tidak muncul">
+                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?> "value="kriteria tidak muncul">
                                             <label class="form-check-label" for="inlineRadio1">kriteria tidak muncul</label>
                                         </div>
 
                                         <div class="custom-control custom-radio custom-control-inline ml-3 ">
-                                            <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria kurang muncul">
+                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?>" value="kriteria kurang muncul">
                                             <label class="form-check-label" for="inlineRadio1">kriteria kurang muncul</label>
                                         </div>
 
                                         <div class="custom-control custom-radio custom-control-inline ml-3 ">
-                                            <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria agak muncul" checked>
+                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?>" value="kriteria agak muncul">
                                             <label class="form-check-label" for="inlineRadio1">kriteria agak muncul</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline  ml-3">
-                                            <input class="form-check-input" type="radio" name=<?= "nilai_bobot" . $i ?> value="kriteria yakin muncul">
+                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?>" value="kriteria yakin muncul">
                                             <label class="form-check-label" for="inlineRadio1">kriteria yakin muncul</label>
                                         </div>
                                     </div>

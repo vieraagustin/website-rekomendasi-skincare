@@ -42,7 +42,7 @@
         <div class="card-body">
             <div class="table-responsive float-right">
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <h1 class="text-uppercase">   <?= $this->session->userdata('sess_skincare_nama') ?'Hi.. '.$this->session->userdata('sess_skincare_nama'):''; ?> 🩲 </h1>
+                    <h1 class="text-uppercase">   <?= $this->session->userdata('sess_skincare_nama') ?'Hi.. '.$this->session->userdata('sess_skincare_nama'):''; ?></h1>
                     <h1 class="h6 ml-1 mb-3 text-gray-800">hasil skor jenis kulit anda sebagai berikut :</h1>
                     <thead>
                         <tr class="bg-info text-white">
@@ -68,7 +68,7 @@
             <div class="row my-4">
                 <div class="col-6">
                     <button class="btn btn-warning" data-toggle="modal" data-target="#recommendationModal" onclick="showPofileMatchRecommendation()">
-                        <i class="fas fa-fw fa-poop"></i> | Rekomendasi
+                        <i class="fas fa-fw fa-star"></i> | Rekomendasi
                     </button>
                 </div>
                 <div class="col-6">

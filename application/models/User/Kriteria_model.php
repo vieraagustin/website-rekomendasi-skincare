@@ -4,8 +4,6 @@ class Kriteria_model extends CI_Model
 {
 	public function cek_bobot($keterangan)
 	{
-		var_dump($keterangan);
-		echo "<br>";
 		$this->db->select('bobot')
 				->from('nilai_bobot')
 				->where('keterangan',$keterangan);

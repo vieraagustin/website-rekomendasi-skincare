@@ -36,7 +36,6 @@ class Jenis_Kulit extends CI_Controller {
 			$ket_bobot13 =$this->input->post('nilai_bobot13');
 			$ket_bobot14 =$this->input->post('nilai_bobot14');
 
-
 	//cek bobot masing-masing kriteria
 			//kulit normal
 			$bobot1 = $this->Kriteria_model->cek_bobot($ket_bobot1);

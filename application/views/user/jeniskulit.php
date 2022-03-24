@@ -77,7 +77,7 @@
                                     <label class="form-check-label"> <?= $i . " Apakah " . $kriteria->kriteria ?></label>
                                     <div class="">
                                         <div class="custom-control custom-radio custom-control-inline ml-3 mt-1  ">
-                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?> "value="kriteria tidak muncul">
+                                            <input class="form-check-input" type="radio" name="<?= "nilai_bobot" . $i ?>" value="kriteria tidak muncul">
                                             <label class="form-check-label" for="inlineRadio1">kriteria tidak muncul</label>
                                         </div>
 
